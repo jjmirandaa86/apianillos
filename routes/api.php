@@ -77,6 +77,6 @@ Route::delete('/typeentry/{idTypeEntry}', [TypeentryController::class, 'destroyX
 //Expense
 //=====================================
 Route::post('/expense', [ExpenseController::class, 'create']);
-Route::post('/expense/idUserDate', [ExpenseController::class, 'getDataXIdUserDate']);
-Route::post('/expense/countTotal', [ExpenseController::class, 'getDataXIdUserDateCountTotal']);
-Route::post('/expense/counttotalmonth', [ExpenseController::class, 'getDataXIdUserMontDateCountTotal']);
+Route::post('/expense/idUserDate', [ExpenseController::class, 'showIdUserDate']);
+Route::post('/expense/countTotal', [ExpenseController::class, 'showIdUserDateCountTotal']);
+Route::post('/expense/counttotalmonth', [ExpenseController::class, 'showIdUserMontDateCountTotal']);

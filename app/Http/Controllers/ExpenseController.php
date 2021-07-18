@@ -9,7 +9,7 @@ class ExpenseController extends Controller
 {
     // GET DATA X IDUSER DATE
     //======================
-    public function getDataXIdUserDate(Request $request)
+    public function showIdUserDate(Request $request)
     {
         return Expense::select("*")
             ->where("idCountry", $request->input('idCountry'))
@@ -20,7 +20,7 @@ class ExpenseController extends Controller
 
     // GET DATA X IDUSER DATE - COUNT, TOTAL
     //======================
-    public function getDataXIdUserDateCountTotal(Request $request)
+    public function showIdUserDateCountTotal(Request $request)
     {
         return Expense::selectRaw("idUser, count(*) as countRow, sum(amount) as totalRow")
             ->where("idCountry", $request->input('idCountry'))
@@ -32,7 +32,7 @@ class ExpenseController extends Controller
 
     // GET DATA X IDUSER DATE - MONT, COUNT, TOTAL
     //======================
-    public function getDataXIdUserMontDateCountTotal(Request $request)
+    public function showIdUserMontDateCountTotal(Request $request)
     {
         return Expense::selectRaw("year(dateInvoice) as year, monthname(dateInvoice) as month, month(dateInvoice) as nummonth, sum(amount) as totalRow")
             ->where("idCountry", $request->input('idCountry'))
