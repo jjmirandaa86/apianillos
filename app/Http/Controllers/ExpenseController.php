@@ -15,7 +15,7 @@ class ExpenseController extends Controller
             ->where("idCountry", $request->input('idCountry'))
             ->where("idUser", $request->input('idUser'))
             ->whereBetween('dateInvoice', array($request->input('dateFirst'), $request->input('dateEnd')))
-            ->paginate(20);
+            ->paginate(5);
     }
 
     // GET DATA X IDUSER DATE - COUNT, TOTAL
@@ -27,7 +27,7 @@ class ExpenseController extends Controller
             ->where("idUser", $request->input('idUser'))
             ->whereBetween('dateInvoice', array($request->input('dateFirst'), $request->input('dateEnd')))
             ->groupBy('idUser')
-            ->paginate(20);
+            ->paginate(5);
     }
 
     // GET DATA X IDUSER DATE - MONT, COUNT, TOTAL
@@ -41,7 +41,7 @@ class ExpenseController extends Controller
             ->groupby('year', 'month', 'nummonth')
             ->orderBy('year', 'ASC')
             ->orderBy('nummonth', 'ASC')
-            ->paginate(20);
+            ->paginate(5);
     }
 
     // CREATE
