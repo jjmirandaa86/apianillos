@@ -11,6 +11,8 @@ use App\Http\Controllers\TypeentryController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\LanguageController;
 
+
+
 //RUTAS PROTEGIDAS POR TOKEN
 //===================================================================
 Route::group(['middleware' => 'auth:api'], function () {
@@ -74,9 +76,15 @@ Route::get('/typeentry/all', [TypeentryController::class, 'all']);
 Route::get('/typeentry/id/{idCountry}', [TypeentryController::class, 'getDataXidCountry']);
 Route::post('/typeentry', [TypeentryController::class, 'create']);
 Route::delete('/typeentry/{idTypeEntry}', [TypeentryController::class, 'destroyXIdTypeEntry']);
+
 //Expense
 //=====================================
 Route::post('/expense', [ExpenseController::class, 'create']);
+Route::put('/expense/state', [ExpenseController::class, 'updateState']);
 Route::post('/expense/idUserDate', [ExpenseController::class, 'showIdUserDate']);
 Route::post('/expense/countTotal', [ExpenseController::class, 'showIdUserDateCountTotal']);
 Route::post('/expense/counttotalmonth', [ExpenseController::class, 'showIdUserMontDateCountTotal']);
+
+
+
+Route::post('/expense/excel', [ExpenseController::class, 'downloadExcel']);

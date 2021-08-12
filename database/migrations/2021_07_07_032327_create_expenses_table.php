@@ -45,7 +45,7 @@ class CreateExpensesTable extends Migration
                 ->comment('Ruta de Imagen Servidor');
             $table->string('state', 1)
                 ->default('I')
-                ->comment('I Ingresada, A Aprobada D Devuelta');
+                ->comment('I Ingresada, A Aprobada N Negada');
             $table->timestamps();
 
             $table->foreign('idCountry')->references('idCountry')->on('countries');
