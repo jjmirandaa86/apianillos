@@ -79,6 +79,7 @@ Route::delete('/typeentry/{idTypeEntry}', [TypeentryController::class, 'destroyX
 
 //Expense
 //=====================================
+Route::post('/expense/upload', [ExpenseController::class, 'uploadFile']);
 Route::post('/expense', [ExpenseController::class, 'create']);
 Route::put('/expense/state', [ExpenseController::class, 'updateState']);
 Route::post('/expense/idUserDate', [ExpenseController::class, 'showIdUserDate']);

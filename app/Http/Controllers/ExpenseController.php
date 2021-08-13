@@ -45,54 +45,55 @@ class ExpenseController extends Controller
             ->paginate(5);
     }
 
+    // UPLOAD FILE
+    //======================
+    public function uploadFile(Request $request)
+    {
+        $directorio = $request->input("folder");
+        $year = $request->input("year");
+        $month = $request->input("month");
+        $day = $request->input("day");
+        $idUser = $request->input("idUser");
+        $idCountry = $request->input("idCountry");
+        $idSupplier = $request->input("idSupplier");
+        $pathImage = $directorio . '/' . $year . '/' . $month . '/';
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = $idCountry . '-' . $year . $month . $day . '-' . $idUser . '-' . $idSupplier . '-' . date('His');
+
+            $filename = pathinfo($filename, PATHINFO_FILENAME);
+            $name_File = str_replace(" ", "_", $filename);
+            $extension = $file->getClientOriginalExtension();
+            $picture = $name_File . '.' . $extension;
+            $file->move(public_path($pathImage), $picture);
+            return  response()->json(["exito" => true, "urlFile" => $pathImage . $picture]);
+        } else {
+
+            return  response()->json(["exito" => false, "urlFile" => null]);
+        }
+    }
+
+
     // CREATE
     //======================
     public function create(Request $request)
     {
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $name = time() . $file->getClientOriginalName();
-            $file->move(public_path() . '/expensive/');
-            return  $name;
-        }
-        /* $saveFile = false;
-        //Sube el archivo al servidor
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $fileName = $file->getClientOriginalName();
-
-            $fileName = pathinfo($fileName, PATHINFO_FILENAME);
-            $name_file = str_replace(" ", "_", $fileName);
-
-            $extension = $file->getClientOriginalExtension();
-
-            $picture = date('His') . '-' . $fileName . '.' . $extension;
-            $file->move(public_path('Expensive/'), $picture);
-
-            $saveFile = true;
-        }
-
-        if ($saveFile) {
-            //Guarda en BD
-            $expense = new Expense();
-            //idExpense
-            $expense->idCountry = $request->input('idCountry');
-            $expense->idUser = $request->input('idUser');
-            $expense->idTypeEntry = $request->input('idTypeEntry');
-            $expense->idSupplier = $request->input('idSupplier'); //
-            $expense->nameSupplier = $request->input('nameSupplier');
-            $expense->serieInvoice = $request->input('serieInvoice');
-            $expense->dateInvoice = $request->input('dateInvoice');
-            $expense->amount = $request->input('amount');
-            $expense->image = $request->input('image');
-            $expense->state = $request->input('state');
-            $expense->save();
-            return json_encode(['msg' => 'exito creación']);
-        } else {
-            return json_encode(['msg' => 'Error en la creación, archivo no se pudo almacenar.']);
-        } */
-
-        return $request;
+        //Guarda en BD
+        $expense = new Expense();
+        //idExpense
+        $expense->idCountry = $request->input('idCountry');
+        $expense->idUser = $request->input('idUser');
+        $expense->idTypeEntry = $request->input('idTypeEntry');
+        $expense->idSupplier = $request->input('idSupplier'); //
+        $expense->nameSupplier = $request->input('nameSupplier');
+        $expense->serieInvoice = $request->input('serieInvoice');
+        $expense->dateInvoice = $request->input('dateInvoice');
+        $expense->amount = $request->input('amount');
+        $expense->image = $request->input('image');
+        $expense->state = $request->input('state');
+        $expense->save();
+        return json_encode(['msg' => 'exito creación']);
     }
 
     // EDIT
