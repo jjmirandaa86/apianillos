@@ -12,11 +12,40 @@ class ExpenseController extends Controller
     //======================
     public function showIdUserDate(Request $request)
     {
-        return Expense::select("*")
+        return DB::table('expenses')
+            ->join('users', 'users.idUser', '=', 'expenses.idUser')
+            ->join('typeentries', 'typeentries.idTypeEntry', '=', 'expenses.idTypeEntry')
+            ->select(
+                "expenses.idExpense",
+                "expenses.idCountry",
+                "expenses.idTypeEntry",
+                "typeentries.name as typeEntryName",
+                "expenses.idSupplier",
+                "expenses.nameSupplier",
+                "expenses.serieInvoice",
+                "expenses.dateInvoice",
+                "expenses.amount",
+                "expenses.image",
+                "expenses.state",
+                "users.idUser",
+                "users.idOffice",
+                "users.firtsName",
+                "users.lastName",
+                "users.position"
+            )
+            ->where("expenses.idCountry", $request->input('idCountry'))
+            ->paginate(5);
+
+
+
+
+
+        /* return Expense::select("*")
             ->where("idCountry", $request->input('idCountry'))
             ->where("idUser", $request->input('idUser'))
             ->whereBetween('dateInvoice', array($request->input('dateFirst'), $request->input('dateEnd')))
-            ->paginate(5);
+            ->orderBy('dateInvoice', 'desc')
+            ->paginate(5); */
     }
 
     // GET DATA X IDUSER DATE - COUNT, TOTAL

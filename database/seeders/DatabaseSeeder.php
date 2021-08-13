@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             Userseeders::class,
             TypeEntriesseeders::class,
             Languageseeders::class,
+            Stateseeders::class
+
         ]);
     }
 }
