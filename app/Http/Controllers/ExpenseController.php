@@ -15,6 +15,7 @@ class ExpenseController extends Controller
         return DB::table('expenses')
             ->join('users', 'users.idUser', '=', 'expenses.idUser')
             ->join('typeentries', 'typeentries.idTypeEntry', '=', 'expenses.idTypeEntry')
+            ->join('states', 'states.value', '=', 'expenses.state')
             ->select(
                 "expenses.idExpense",
                 "expenses.idCountry",
@@ -27,6 +28,7 @@ class ExpenseController extends Controller
                 "expenses.amount",
                 "expenses.image",
                 "expenses.state",
+                "states.name as stateName",
                 "users.idUser",
                 "users.idOffice",
                 "users.firtsName",
@@ -34,11 +36,11 @@ class ExpenseController extends Controller
                 "users.position"
             )
             ->where("expenses.idCountry", $request->input('idCountry'))
+            ->where("expenses.idUser", $request->input('idUser'))
+            ->whereBetween('expenses.dateInvoice', array($request->input('dateFirst'), $request->input('dateEnd')))
+            ->where("states.tableReference", "expenses")
+            ->orderBy('dateInvoice', 'desc')
             ->paginate(5);
-
-
-
-
 
         /* return Expense::select("*")
             ->where("idCountry", $request->input('idCountry'))
@@ -52,26 +54,29 @@ class ExpenseController extends Controller
     //======================
     public function showIdUserDateCountTotal(Request $request)
     {
-        return Expense::selectRaw("idUser, count(*) as countRow, sum(amount) as totalRow")
+        /* return Expense::selectRaw("idUser, count(*) as countRow, sum(amount) as totalRow")
             ->where("idCountry", $request->input('idCountry'))
             ->where("idUser", $request->input('idUser'))
             ->whereBetween('dateInvoice', array($request->input('dateFirst'), $request->input('dateEnd')))
             ->groupBy('idUser')
-            ->paginate(5);
+            ->get(); */
+        /* ->paginate(5); */
     }
 
     // GET DATA X IDUSER DATE - MONT, COUNT, TOTAL
     //======================
     public function showIdUserMontDateCountTotal(Request $request)
     {
-        return Expense::selectRaw("year(dateInvoice) as year, monthname(dateInvoice) as month, month(dateInvoice) as nummonth, sum(amount) as totalRow")
+
+        return Expense::selectRaw("year(dateInvoice) as year, monthname(dateInvoice) as month, month(dateInvoice) as nummonth, sum(amount) as amountTotal, count(amount) as countExpensive")
             ->where("idCountry", $request->input('idCountry'))
             ->where("idUser", $request->input('idUser'))
+            /*             ->whereBetween('idExpense', array(8, 9)) */
             ->whereBetween('dateInvoice', array($request->input('dateFirst'), $request->input('dateEnd')))
             ->groupby('year', 'month', 'nummonth')
             ->orderBy('year', 'ASC')
             ->orderBy('nummonth', 'ASC')
-            ->paginate(5);
+            ->get();   //paginate(5);
     }
 
     // UPLOAD FILE
@@ -103,7 +108,6 @@ class ExpenseController extends Controller
         }
     }
 
-
     // CREATE
     //======================
     public function create(Request $request)
@@ -125,7 +129,7 @@ class ExpenseController extends Controller
         return json_encode(['msg' => 'exito creación']);
     }
 
-    // EDIT
+    // UPDATE STATE
     //======================
     public function updateState(Request $request)
     {
