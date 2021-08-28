@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TypeentryController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\StateController;
 
 
 
@@ -73,7 +74,7 @@ Route::post('/user/login', [UserController::class, 'login']); //Validar la clave
 //Type_entry
 //=====================================
 Route::get('/typeentry/all', [TypeentryController::class, 'all']);
-Route::get('/typeentry/id/{idCountry}', [TypeentryController::class, 'getDataXidCountry']);
+Route::get('/typeentry/country/{idCountry}', [TypeentryController::class, 'getDataXidCountry']);
 Route::post('/typeentry', [TypeentryController::class, 'create']);
 Route::delete('/typeentry/{idTypeEntry}', [TypeentryController::class, 'destroyXIdTypeEntry']);
 
@@ -85,6 +86,10 @@ Route::put('/expense/state', [ExpenseController::class, 'updateState']);
 Route::post('/expense/idUserDate', [ExpenseController::class, 'showIdUserDate']);
 Route::post('/expense/countTotal', [ExpenseController::class, 'showIdUserDateCountTotal']);
 Route::post('/expense/counttotalmonth', [ExpenseController::class, 'showIdUserMontDateCountTotal']);
+
+//State
+//=====================================
+Route::post('/state/tableIdCountry', [StateController::class, 'showStateTableIdCountry']);
 
 
 

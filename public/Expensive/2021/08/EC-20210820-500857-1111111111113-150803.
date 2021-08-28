@@ -1,0 +1,45 @@
+@ccesoEcuador3020###
+
+sudo su
+chmod -R 777 Prueba
+
+copy .env.example .env
+php artisan migrate:fresh --seed
+
+lsof -i:8080
+kill -9 $(lsof -t -i:8080)
+
+nano
+
+usuario para base de anillos
+anillos
+anilloskey
+
+pma
+pma198PMA_
+
+git token
+ vscode://vscode.github-authentication/did-authenticate?windowid=1&code=79abbd105c951cd78e59&state=a90001ec-4dd7-42d3-a42a-3f17bd52e061 
+
+
+
+
+
+
+
+
+
+*********** Server Digital Ocean
+ * PhpmyAdmin // URL // https://comoinstalar.me/como-instalar-phpmyadmin-en-ubuntu-20-04-lts/
+
+$cfg['blowfish_secret'] = '3456uyfvbhd34seryufi8oihjgy8ERDF';
+$cfg['Servers'][$i]['controlpass'] = 'QJnD72l.';
+
+
+ * Mysql
+Usuario principal
+1.- root
+ubuntuMysql*_1986
+
+2.- anillos
+FmqUI891.,=HG6

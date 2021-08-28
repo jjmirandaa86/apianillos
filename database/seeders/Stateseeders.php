@@ -17,6 +17,7 @@ class Stateseeders extends Seeder
         //*********************************** */
         //********* typeentries ************* */
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "typeentries",
             'value' => "I",
             'name' => "Inactivo",
@@ -26,6 +27,7 @@ class Stateseeders extends Seeder
         ]);
 
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "typeentries",
             'value' => "A",
             'name' => "Activo",
@@ -37,6 +39,7 @@ class Stateseeders extends Seeder
         //*********************************** */
         //************** Users ************* */
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "users",
             'value' => "I",
             'name' => "Inactivo",
@@ -46,6 +49,7 @@ class Stateseeders extends Seeder
         ]);
 
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "users",
             'value' => "A",
             'name' => "Activo",
@@ -57,6 +61,7 @@ class Stateseeders extends Seeder
         //*********************************** */
         //************** regions ************* */
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "regions",
             'value' => "I",
             'name' => "Inactivo",
@@ -66,6 +71,7 @@ class Stateseeders extends Seeder
         ]);
 
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "regions",
             'value' => "A",
             'name' => "Activo",
@@ -77,6 +83,7 @@ class Stateseeders extends Seeder
         //*********************************** */
         //************** offices ************* */
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "offices",
             'value' => "I",
             'name' => "Inactivo",
@@ -86,6 +93,7 @@ class Stateseeders extends Seeder
         ]);
 
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "offices",
             'value' => "A",
             'name' => "Activo",
@@ -97,6 +105,7 @@ class Stateseeders extends Seeder
         //*********************************** */
         //************** languages ************* */
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "languages",
             'value' => "I",
             'name' => "Inactivo",
@@ -106,6 +115,7 @@ class Stateseeders extends Seeder
         ]);
 
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "languages",
             'value' => "A",
             'name' => "Activo",
@@ -119,6 +129,7 @@ class Stateseeders extends Seeder
         //********* typeentries ************* */
 
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "expenses",
             'value' => "A",
             'name' => "Aprobado",
@@ -128,6 +139,7 @@ class Stateseeders extends Seeder
         ]);
 
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "expenses",
             'value' => "N",
             'name' => "Negado",
@@ -137,6 +149,7 @@ class Stateseeders extends Seeder
         ]);
 
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "expenses",
             'value' => "I",
             'name' => "Ingresado",
@@ -148,6 +161,7 @@ class Stateseeders extends Seeder
         //*********************************** */
         //************** countries ************* */
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "countries",
             'value' => "I",
             'name' => "Inactivo",
@@ -157,6 +171,7 @@ class Stateseeders extends Seeder
         ]);
 
         DB::table('states')->insert([
+            'idCountry' => "EC",
             'tableReference' => "countries",
             'value' => "A",
             'name' => "Activo",

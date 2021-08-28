@@ -6,6 +6,7 @@ use Exception;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Auth\Authenticatable;
 
@@ -76,7 +77,7 @@ class UserController extends Controller
         $user->profile = $request->input('profile');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
-        $user->api_token = Str::random(255);
+        //$user->api_token = Str::random(255);
         $user->state = $request->input('state');
         $user->save();
 
@@ -124,14 +125,9 @@ class UserController extends Controller
     //======================
     public function login(Request $request)
     {
-        $email = $request->input('email');
-        $password = $request->input('password');
-
-        $user = User::where("email", $email)
+        $user = User::where("idUser", $request->input('idUser'))
             ->first();
-        $user = $user->makeHidden(['idOffice', 'password', 'created_at', 'updated_at',]);
-
-        if (!is_null($user) && Hash::check($password, $user->password)) {
+        if (!is_null($user) && Hash::check($request->input('password'), $user->password)) {
 
             //Almaceno el login y token 
             $accessuser = new Accessuser();
@@ -140,36 +136,43 @@ class UserController extends Controller
             $accessuser->ipAddress = $request->ip();
             $accessuser->save();
 
-            //ACCESS USER
-            $accessuser = $accessuser->makeHidden(['id', 'idUser', 'created_at', 'updated_at',]);
+            //Actualizo
+            $user = User::find($request->input('idUser'));
+            $user->api_token = Str::random(255);
+            $user->save();
 
-            //OFFICE
-            $officeuser = Office::where("idOffice", $user->idOffice)->first();
-            $officeuser = $officeuser->makeHidden(['idRegion', 'created_at', 'updated_at',]);
-
-            //REGION
-            $regionuser = Region::where("idRegion", $officeuser->idRegion)->first();
-            $regionuser = $regionuser->makeHidden(['idCountry', 'created_at', 'updated_at',]);
-
-            //COUNTRY
-            $countryuser = Country::where("idCountry", $regionuser->idCountry)->first();
-            $countryuser = $countryuser->makeHidden(['currency', 'simbol', 'created_at', 'updated_at',]);
-
-            //$user->officeName = $officeuser->name;
+            $val = DB::table('users')
+                ->join('accessusers', 'accessusers.idUser', '=', 'users.idUser')
+                ->join('offices', 'offices.idOffice', '=', 'users.idOffice')
+                ->join('regions', 'regions.idRegion', '=', 'offices.idRegion')
+                ->join('countries', 'countries.idCountry', '=', 'regions.idCountry')
+                ->select(
+                    "users.idUser",
+                    "users.firtsName",
+                    "users.lastName",
+                    "users.position",
+                    "users.profile",
+                    "users.email",
+                    "users.api_token",
+                    "users.state",
+                    "offices.idOffice",
+                    "offices.name as officeName",
+                    "regions.idRegion",
+                    "regions.name as regionsName",
+                    "countries.idCountry",
+                    "countries.name as countryName",
+                    "countries.currency",
+                    "countries.simbol"
+                )
+                ->where("users.idUser", $request->input('idUser'))
+                ->get();
 
             return json_encode([
                 'msg' => 'Login Exitoso',
-                'user' => $user,
-                'session' => $accessuser,
-                'location' => [
-                    'Office' => $officeuser,
-                    'Region' => $regionuser,
-                    'Country' => $countryuser,
-                ],
-                'money' => [$countryuser->currency, $countryuser->simbol],
+                'user' => $val,
             ]);
         } else {
-            return json_encode(['msg' => 'Email o contraseña invalida']);
+            return json_encode(['msg' => 'Usuario o contraseña invalida']);
         }
     }
 }
