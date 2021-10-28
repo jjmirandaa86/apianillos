@@ -68,8 +68,6 @@ Route::post('/user/login', [UserController::class, 'login']); //Validar la clave
 
 
 
-
-
 //PENDIENTE REVISION
 //Type_entry
 //=====================================
